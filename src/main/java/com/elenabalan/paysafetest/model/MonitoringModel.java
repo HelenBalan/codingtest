@@ -1,16 +1,13 @@
 package com.elenabalan.paysafetest.model;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MediaType;
-import javax.xml.ws.WebServiceException;
 
 import static java.lang.Thread.sleep;
 
@@ -71,11 +68,14 @@ public class MonitoringModel implements Runnable {
 
         while (flag == MonitoringFlag.RUN) {
             beginTimeMark = Instant.now();
-            Client client = ClientBuilder.newClient();
-            Response response = client.target(serverUri)
-                    .request(MediaType.TEXT_PLAIN_TYPE)
-                    .get();
-            state = response.getStatus() == 200 ? MonitoringState.READY : MonitoringState.UNAVAILABLE;
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<String> response = restTemplate.getForEntity(serverUri, String.class);
+                state = response.getStatusCode() == HttpStatus.OK ? MonitoringState.READY : MonitoringState.UNAVAILABLE;
+            } catch (final Exception e) {
+                state = MonitoringState.UNAVAILABLE;
+            }
+
             endTimeMark = Instant.now();
             saveInfo(endTimeMark, state);
             Duration responseTime = Duration.between(beginTimeMark, endTimeMark);
@@ -84,7 +84,7 @@ public class MonitoringModel implements Runnable {
                 try {
                     sleep(leftTime.toMillis());
                 } catch (InterruptedException e) {
-                    throw new WebServiceException(Arrays.toString(e.getStackTrace()));
+                    flag = MonitoringFlag.STOPPED;
                 }
             }
         }
