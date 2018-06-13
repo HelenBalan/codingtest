@@ -14,7 +14,7 @@ import static java.lang.Thread.sleep;
 
 public class MonitoringModel implements Runnable {
 
-    final private String server_uri;
+    private final String serverUri;
 
     private volatile MonitoringFlag flag = MonitoringFlag.RUN;
 
@@ -22,8 +22,8 @@ public class MonitoringModel implements Runnable {
 
     private List<MonitoringPeriod> periods = new ArrayList<>();
 
-    public MonitoringModel(String s_uri) {
-        this.server_uri = s_uri;
+    public MonitoringModel(String sUri) {
+        this.serverUri = sUri;
     }
 
     public Duration getDuration() {
@@ -65,12 +65,12 @@ public class MonitoringModel implements Runnable {
     public void run() {
         Instant beginTimeMark;
         Instant endTimeMark;
-        MonitoringState state = MonitoringState.UNDEFINED;
+        MonitoringState state;
 
         while (flag == MonitoringFlag.RUN) {
             beginTimeMark = Instant.now();
             Client client = ClientBuilder.newClient();
-            Response response = client.target(server_uri)
+            Response response = client.target(serverUri)
                     .request(MediaType.TEXT_PLAIN_TYPE)
                     .get();
             state = response.getStatus() == 200 ? MonitoringState.READY : MonitoringState.UNAVAILABLE;
@@ -82,7 +82,7 @@ public class MonitoringModel implements Runnable {
                 try {
                     sleep(leftTime.toMillis());
                 } catch (InterruptedException e) {
-                    return;
+                    throw new RuntimeException(e.getStackTrace().toString());
                 }
             }
         }
