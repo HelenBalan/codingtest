@@ -11,7 +11,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class MonitoringModel implements Runnable {
+public class MonitoringModel {
 
     private final String serverUri;
 
@@ -50,7 +50,11 @@ public class MonitoringModel implements Runnable {
         return new ArrayList<>(periods);
     }
 
-    private void saveInfo(Instant time, MonitoringState currentState) {
+    public String getServerUri() {
+        return serverUri;
+    }
+
+    public void saveInfo(Instant time, MonitoringState currentState) {
 
         if ((!periods.isEmpty()) && (periods.get(periods.size() - 1).getState() == currentState)) {
             periods.get(periods.size() - 1).setEnd(time);
@@ -58,34 +62,5 @@ public class MonitoringModel implements Runnable {
             periods.add(new MonitoringPeriod(time, currentState));
         }
 
-    }
-
-    @Override
-    public void run() {
-        Instant beginTimeMark;
-        Instant endTimeMark;
-        MonitoringState state;
-
-        while (flag == MonitoringFlag.RUN) {
-            beginTimeMark = Instant.now();
-            try {
-                RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<String> response = restTemplate.getForEntity(serverUri, String.class);
-                state = response.getStatusCode() == HttpStatus.OK ? MonitoringState.READY : MonitoringState.UNAVAILABLE;
-            } catch (final Exception e) {
-                state = MonitoringState.UNAVAILABLE;
-            }
-
-            endTimeMark = Instant.now();
-            saveInfo(endTimeMark, state);
-            Duration responseTime = Duration.between(beginTimeMark, endTimeMark);
-            Duration leftTime = duration.minus(responseTime);
-            if (leftTime.isNegative()) continue;
-            try {
-                sleep(leftTime.toMillis());
-            } catch (InterruptedException e) {
-                flag = MonitoringFlag.STOPPED;
-            }
-        }
     }
 }

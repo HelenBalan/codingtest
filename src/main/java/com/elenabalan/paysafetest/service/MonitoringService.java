@@ -27,7 +27,8 @@ public class MonitoringService {
         monitor = new MonitoringModel(uri);
         monitor.setDuration(seconds);
         monitoringData.put(uri, monitor);
-        Thread thread = new Thread(monitor, uri);
+        MonitoringServiceRunner runner = new MonitoringServiceRunner(monitor);
+        Thread thread = new Thread(runner, uri);
         thread.start();
 
     }
