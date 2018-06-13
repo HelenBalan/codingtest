@@ -15,12 +15,10 @@
  *
  */
 
-/*
- *  Wrapper for incoming information for stopping monitoring or getting info
- *  */
-
 package com.elenabalan.paysafetest.model;
-
+/**
+ *  Wrapper for incoming information for stopping monitoring or getting info
+ */
 public class StopOrInfoQuery {
     private String uri;
 

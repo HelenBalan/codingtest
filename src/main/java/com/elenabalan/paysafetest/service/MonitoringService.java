@@ -31,6 +31,7 @@ public class MonitoringService {
     private Map<String, MonitoringModel> monitoringData = new HashMap<>();
 
     /**
+     * Getting monitoring info
      *
      * @param uri  watched server
      * @return information about availability
@@ -43,6 +44,7 @@ public class MonitoringService {
     }
 
     /**
+     * Starting monitoring
      *
      * @param uri watched server
      * @param seconds checking interval
@@ -62,6 +64,7 @@ public class MonitoringService {
     }
 
     /**
+     * Stopping monitoring
      *
      * @param uri watched server
      */

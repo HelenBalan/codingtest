@@ -15,12 +15,11 @@
  *
  */
 
-/*
- *  Wrapper for incoming information for starting monitoring
- *  */
-
 package com.elenabalan.paysafetest.model;
 
+/**
+ *  Wrapper for incoming information for starting monitoring
+ */
 public class StartQuery {
     private String uri;
     private double seconds;

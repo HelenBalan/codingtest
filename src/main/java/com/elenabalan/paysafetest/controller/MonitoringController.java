@@ -15,38 +15,6 @@
  *
  */
 
-/* REST Controller
-*   Using examples:
-*
-*   For start watching:
-*   METHOD PUT
-*   <your host>/monitor/start
-*   Content-Type: application/json
-*   BODY
-*   {
-*   "uri": "<tested server>",
-*   "seconds": <interval in seconds, may be double>
-*   }
-*
-*   For stop watching:
-*   METHOD PUT
-*   <your host>/monitor/stop
-*   Content-Type: application/json
-*   BODY
-*   {
-*   "uri": "<tested server>"
-*   }
-*
-*   For get info:
-*   METHOD PUT
-*   <your host>/monitor/info
-*   Content-Type: application/json
-*   BODY
-*   {
-*   "uri": "<tested server>"
-*   }
-* */
-
 package com.elenabalan.paysafetest.controller;
 
 import com.elenabalan.paysafetest.model.MonitoringLogInfo;
@@ -57,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+/**
+ *  REST Controller
+ */
 @RestController
 @RequestMapping("/monitor")
 public class MonitoringController {
@@ -64,16 +35,44 @@ public class MonitoringController {
     @Autowired
     private MonitoringService monitoringService;
 
+    /**   For start watching:
+    *   METHOD PUT
+    *   <your host>/monitor/start
+    *   Content-Type: application/json
+    *   BODY
+    *   {
+    *   "uri": "<tested server>",
+    *   "seconds": <interval in seconds, may be double>
+    *   }
+    * */
     @RequestMapping(value = "/start", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void startMonitoring(@RequestBody StartQuery startQuery) {
         monitoringService.start(startQuery.getUri(), startQuery.getSeconds());
     }
 
+    /**   For stop watching:
+     *   METHOD PUT
+     *   <your host>/monitor/stop
+     *   Content-Type: application/json
+     *   BODY
+     *   {
+     *   "uri": "<tested server>"
+     *   }
+     * */
     @RequestMapping(value = "/stop", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void stopMonitoring(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
         monitoringService.stop(stopOrInfoQuery.getUri());
     }
 
+    /**   For get info:
+     *   METHOD PUT
+     *   <your host>/monitor/info
+     *   Content-Type: application/json
+     *   BODY
+     *   {
+     *   "uri": "<tested server>"
+     *   }
+     * */
     @RequestMapping(value = "/info", method = RequestMethod.PUT)
     public MonitoringLogInfo getOverview(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
         return monitoringService.getOverview(stopOrInfoQuery.getUri());

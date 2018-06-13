@@ -15,16 +15,16 @@
  *
  */
 
-/*
- *  Model of monitoring process
- *  */
-
 package com.elenabalan.paysafetest.model;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ *  Model of monitoring process
+ */
 
 public class MonitoringModel {
 

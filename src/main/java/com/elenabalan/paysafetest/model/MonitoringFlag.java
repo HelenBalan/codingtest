@@ -15,12 +15,10 @@
  *
  */
 
-/*
- *  States of monitoring process
- *  */
-
 package com.elenabalan.paysafetest.model;
-
+/**
+ *  States of monitoring process
+ */
 public enum MonitoringFlag {
     RUN, STOPPED
 }

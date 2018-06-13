@@ -20,6 +20,9 @@ package com.elenabalan.paysafetest.model;
 import java.io.Serializable;
 import java.time.Instant;
 
+/**
+ * Time period this same state
+ */
 public class MonitoringPeriod implements Serializable {
 
     private MonitoringState state;

@@ -15,15 +15,14 @@
  *
  */
 
-/*
- *  Outgoing information about monitoring
- *  */
-
 package com.elenabalan.paysafetest.model;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ *  Outgoing information about monitoring
+ */
 public class MonitoringLogInfo implements Serializable {
     private String uri;
     private double interval;
