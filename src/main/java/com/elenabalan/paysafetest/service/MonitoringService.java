@@ -36,7 +36,6 @@ public class MonitoringService {
      * @param uri  watched server
      * @return information about availability
      */
-
     public MonitoringLogInfo getOverview(String uri) {
         MonitoringModel monitor = monitoringData.get(uri);
         if (monitor == null) return null;
