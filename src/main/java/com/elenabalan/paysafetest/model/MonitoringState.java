@@ -17,7 +17,7 @@
 
 package com.elenabalan.paysafetest.model;
 /**
- *  checked server's states
+ *  Checked server's states
  */
 public enum MonitoringState {
     UNDEFINED, READY, UNAVAILABLE

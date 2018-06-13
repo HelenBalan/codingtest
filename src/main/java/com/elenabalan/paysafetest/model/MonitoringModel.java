@@ -69,6 +69,12 @@ public class MonitoringModel {
         return serverUri;
     }
 
+    /**
+     * Saving information about server's availability
+     *
+     * @param time time of checking
+     * @param currentState current server's state
+     */
     public void saveInfo(Instant time, MonitoringState currentState) {
 
         if ((!periods.isEmpty()) && (periods.get(periods.size() - 1).getState() == currentState)) {

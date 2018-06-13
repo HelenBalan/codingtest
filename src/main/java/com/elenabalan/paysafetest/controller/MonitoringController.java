@@ -35,7 +35,7 @@ public class MonitoringController {
     @Autowired
     private MonitoringService monitoringService;
 
-    /**   For start watching:
+    /**   To start watching:
     *   METHOD PUT
     *   <your host>/monitor/start
     *   Content-Type: application/json
@@ -50,7 +50,7 @@ public class MonitoringController {
         monitoringService.start(startQuery.getUri(), startQuery.getSeconds());
     }
 
-    /**   For stop watching:
+    /**   To stop watching:
      *   METHOD PUT
      *   <your host>/monitor/stop
      *   Content-Type: application/json
@@ -64,7 +64,7 @@ public class MonitoringController {
         monitoringService.stop(stopOrInfoQuery.getUri());
     }
 
-    /**   For get info:
+    /**   To get info:
      *   METHOD PUT
      *   <your host>/monitor/info
      *   Content-Type: application/json

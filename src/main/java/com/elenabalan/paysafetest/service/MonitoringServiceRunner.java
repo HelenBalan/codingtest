@@ -39,7 +39,7 @@ public class MonitoringServiceRunner implements Runnable{
     /**
      * Main checking method
      * Check availability
-     * save information
+     * Save information
      */
     @Override
     public void run() {
