@@ -22,13 +22,8 @@ public class MonitoringService {
     public synchronized void start(String uri, double seconds) {
         MonitoringModel monitor = monitoringData.get(uri);
         if (monitor != null) {
-            if (monitor.getFlag() == MonitoringFlag.RUN) {
-                monitor.setFlag(MonitoringFlag.STOPPED);
-            }
-            monitoringData.remove(uri);
-
+            monitor.setFlag(MonitoringFlag.STOPPED);
         }
-
         monitor = new MonitoringModel(uri);
         monitor.setDuration(seconds);
         monitoringData.put(uri, monitor);

@@ -80,12 +80,11 @@ public class MonitoringModel implements Runnable {
             saveInfo(endTimeMark, state);
             Duration responseTime = Duration.between(beginTimeMark, endTimeMark);
             Duration leftTime = duration.minus(responseTime);
-            if (!leftTime.isNegative()) {
-                try {
-                    sleep(leftTime.toMillis());
-                } catch (InterruptedException e) {
-                    flag = MonitoringFlag.STOPPED;
-                }
+            if (leftTime.isNegative()) continue;
+            try {
+                sleep(leftTime.toMillis());
+            } catch (InterruptedException e) {
+                flag = MonitoringFlag.STOPPED;
             }
         }
     }
