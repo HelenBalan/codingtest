@@ -21,8 +21,11 @@ To start app, run
   BODY
   
   {
+  
   "uri": "\<tested_server\>",
+  
   "seconds": \<interval_in_seconds\>
+  
   }
  
 #### To stop watching:
@@ -35,7 +38,9 @@ To start app, run
   BODY
   
   {
+  
   "uri": "\<tested_server\>"
+  
   }
   
 #### To get information:
@@ -48,5 +53,7 @@ To start app, run
   BODY
   
   {
+  
   "uri": "\<tested_server\>"
+  
   }
