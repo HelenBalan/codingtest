@@ -41,7 +41,6 @@ public class MonitoringService {
 
         MonitoringModel monitor = monitoringData.get(uri);
         if (monitor == null) {
-            //Todo log
             return;
         }
         monitor.setFlag(MonitoringFlag.STOPPED);

@@ -3,12 +3,14 @@ package com.elenabalan.paysafetest.model;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
+import javax.xml.ws.WebServiceException;
 
 import static java.lang.Thread.sleep;
 
@@ -82,7 +84,7 @@ public class MonitoringModel implements Runnable {
                 try {
                     sleep(leftTime.toMillis());
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e.getStackTrace().toString());
+                    throw new WebServiceException(Arrays.toString(e.getStackTrace()));
                 }
             }
         }
