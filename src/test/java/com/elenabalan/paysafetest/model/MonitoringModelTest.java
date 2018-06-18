@@ -48,6 +48,7 @@ public class MonitoringModelTest {
 
     @Test
     public void getPeriods() {
+        model.getPeriods();
     }
 
     @Test
@@ -64,22 +65,17 @@ public class MonitoringModelTest {
         model.saveInfo(time2, MonitoringState.READY);
         model.saveInfo(time3, MonitoringState.UNAVAILABLE);
         Field periodsField;
-        try {
-            periodsField = model.getClass().getDeclaredField("periods");
-            periodsField.setAccessible(true);
-            List<MonitoringPeriod> periods = (ArrayList<MonitoringPeriod>) periodsField.get(model);
-            assertEquals(2, periods.size());
-            MonitoringPeriod period1 = periods.get(0);
-            assertEquals(time1, period1.getStart());
-            assertEquals(time2, period1.getEnd());
-            assertEquals(MonitoringState.READY, period1.getState());
-            MonitoringPeriod period2 = periods.get(1);
-            assertEquals(time3, period2.getStart());
-            assertEquals(time3, period2.getEnd());
-            assertEquals(MonitoringState.UNAVAILABLE, period2.getState());
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        List<MonitoringPeriod> periods = model.getPeriods();
+
+        assertEquals(2, periods.size());
+        MonitoringPeriod period1 = periods.get(0);
+        assertEquals(time1, period1.getStart());
+        assertEquals(time2, period1.getEnd());
+        assertEquals(MonitoringState.READY, period1.getState());
+        MonitoringPeriod period2 = periods.get(1);
+        assertEquals(time3, period2.getStart());
+        assertEquals(time3, period2.getEnd());
+        assertEquals(MonitoringState.UNAVAILABLE, period2.getState());
 
     }
 }

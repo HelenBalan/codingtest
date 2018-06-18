@@ -20,6 +20,7 @@ package com.elenabalan.paysafetest.service;
 import com.elenabalan.paysafetest.model.MonitoringFlag;
 import com.elenabalan.paysafetest.model.MonitoringModel;
 import com.elenabalan.paysafetest.model.MonitoringState;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -32,6 +33,9 @@ import static java.lang.Thread.sleep;
 public class MonitoringServiceRunner implements Runnable{
 
     private MonitoringModel monitor;
+
+    @Autowired
+    private RestTemplate restTemplate;
     MonitoringServiceRunner(MonitoringModel monitor){
         this.monitor = monitor;
     }
@@ -50,7 +54,7 @@ public class MonitoringServiceRunner implements Runnable{
         while (monitor.getFlag() == MonitoringFlag.RUN) {
             beginTimeMark = Instant.now();
             try {
-                RestTemplate restTemplate = new RestTemplate();
+                restTemplate = new RestTemplate();
                 ResponseEntity<String> response = restTemplate.getForEntity(monitor.getServerUri(), String.class);
                 state = response.getStatusCode() == HttpStatus.OK ? MonitoringState.READY : MonitoringState.UNAVAILABLE;
             } catch (final Exception e) {
@@ -66,6 +70,7 @@ public class MonitoringServiceRunner implements Runnable{
                 sleep(leftTime.toMillis());
             } catch (InterruptedException e) {
                 monitor.setFlag(MonitoringFlag.STOPPED);
+                Thread.currentThread().interrupt();
             }
         }
     }
