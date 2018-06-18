@@ -64,16 +64,26 @@ public class MonitoringServiceRunnerTest {
     @Test
     public void runSleepException() throws Exception {
 
-        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofMillis(60));
+        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofSeconds(60));
         PowerMockito.spy(Thread.class);
         PowerMockito.doThrow(new InterruptedException()).when(Thread.class);
         Thread.sleep(Mockito.anyLong());
         runner.run();
     }
     @Test
+    public void runSleep() throws Exception {
+
+        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofSeconds(60));
+        PowerMockito.spy(Thread.class);
+        PowerMockito.doNothing().when(Thread.class);
+        Thread.sleep(Mockito.anyLong());
+        runner.run();
+    }
+
+    @Test
     public void runLongWaiting() {
 
-        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofMillis(-5));
+        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofSeconds(-60));
         runner.run();
     }
 }

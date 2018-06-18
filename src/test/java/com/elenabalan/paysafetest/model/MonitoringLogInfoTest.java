@@ -29,4 +29,10 @@ public class MonitoringLogInfoTest {
         assertEquals(newPeriods, monitoringLogInfo.getPeriods());
     }
 
+    @Test
+    public void setInterval() {
+        monitoringLogInfo.setInterval(20);
+        assertEquals(20,(long)monitoringLogInfo.getInterval());
+    }
+
 }
