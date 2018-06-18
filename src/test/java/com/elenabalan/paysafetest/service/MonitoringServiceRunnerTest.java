@@ -64,6 +64,7 @@ public class MonitoringServiceRunnerTest {
     @Test
     public void runSleepException() throws Exception {
 
+        PowerMockito.when(mockMonitor.getDuration()).thenReturn(Duration.ofMillis(60));
         PowerMockito.spy(Thread.class);
         PowerMockito.doThrow(new InterruptedException()).when(Thread.class);
         Thread.sleep(Mockito.anyLong());
