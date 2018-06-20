@@ -45,11 +45,11 @@ public class MonitoringServiceTest {
         MonitoringLogInfo info2 = service.getOverview(fakeUri2);
         MonitoringLogInfo info3 = service.getOverview(fakeUri3);
         assertEquals(fakeUri1, info1.getUri());
-        assertEquals(5,info1.getInterval(),0.001);
+        assertEquals(5,(int)info1.getInterval());
         assertEquals(fakeUri2, info2.getUri());
-        assertEquals(10,info2.getInterval(),0.001);
+        assertEquals(10,(int)info2.getInterval());
         service.start(fakeUri1,15);
-        assertEquals(15,service.getOverview(fakeUri1).getInterval(),0.001);
+        assertEquals(15,(int)service.getOverview(fakeUri1).getInterval());
         service.stop(fakeUri3);
         service.stop(fakeUri1);
         Map<String, MonitoringModel> data = Whitebox.getInternalState(service,"monitoringData");
