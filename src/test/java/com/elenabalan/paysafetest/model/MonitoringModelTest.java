@@ -64,7 +64,6 @@ public class MonitoringModelTest {
         model.saveInfo(time1,MonitoringState.READY);
         model.saveInfo(time2, MonitoringState.READY);
         model.saveInfo(time3, MonitoringState.UNAVAILABLE);
-        Field periodsField;
         List<MonitoringPeriod> periods = model.getPeriods();
 
         assertEquals(2, periods.size());

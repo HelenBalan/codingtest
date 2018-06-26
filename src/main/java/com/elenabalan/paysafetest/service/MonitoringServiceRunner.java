@@ -30,9 +30,11 @@ import java.time.Instant;
 
 import static java.lang.Thread.sleep;
 
+@SuppressWarnings({"squid:S1450"}) // state is a private field for testing the value.
 public class MonitoringServiceRunner implements Runnable{
 
     private MonitoringModel monitor;
+    private MonitoringState state;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -49,7 +51,6 @@ public class MonitoringServiceRunner implements Runnable{
     public void run() {
         Instant beginTimeMark;
         Instant endTimeMark;
-        MonitoringState state;
 
         while (monitor.getFlag() == MonitoringFlag.RUN) {
             beginTimeMark = Instant.now();
