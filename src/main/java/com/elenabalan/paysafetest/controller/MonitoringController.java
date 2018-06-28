@@ -35,47 +35,16 @@ public class MonitoringController {
     @Autowired
     private MonitoringService monitoringService;
 
-   /*
-    *  To start watching:
-    *   METHOD PUT
-    *   <your host>/monitor/start
-    *   Content-Type: application/json
-    *   BODY
-    *   {
-    *   "uri": "<tested server>",
-    *   "seconds": <interval in seconds, may be double>
-    *   }
-    */
     @RequestMapping(value = "/start", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void startMonitoring(@RequestBody StartQuery startQuery) {
         monitoringService.start(startQuery.getUri(), startQuery.getSeconds());
     }
 
-    /*
-     *  To stop watching:
-     *   METHOD PUT
-     *   <your host>/monitor/stop
-     *   Content-Type: application/json
-     *   BODY
-     *   {
-     *   "uri": "<tested server>"
-     *   }
-     */
     @RequestMapping(value = "/stop", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void stopMonitoring(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
         monitoringService.stop(stopOrInfoQuery.getUri());
     }
 
-    /*
-     *  To get info:
-     *   METHOD PUT
-     *   <your host>/monitor/info
-     *   Content-Type: application/json
-     *   BODY
-     *   {
-     *   "uri": "<tested server>"
-     *   }
-     */
     @RequestMapping(value = "/info", method = RequestMethod.PUT)
     public MonitoringLogInfo getOverview(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
         return monitoringService.getOverview(stopOrInfoQuery.getUri());

@@ -26,12 +26,12 @@ import java.time.Instant;
 public class MonitoringPeriod implements Serializable {
 
     private MonitoringState state;
-    private Instant start;
-    private Instant end;
+    private long start;
+    private long end;
 
-    MonitoringPeriod(Instant start, MonitoringState state) {
-        this.start = start;
-        this.end = start;
+    MonitoringPeriod(Instant instantStart, MonitoringState state) {
+        this.start = instantStart.toEpochMilli();
+        this.end = this.start;
         this.state = state;
     }
 
@@ -44,18 +44,18 @@ public class MonitoringPeriod implements Serializable {
     }
 
     public Instant getStart() {
-        return start;
+        return Instant.ofEpochMilli(start);
     }
 
-    public void setStart(Instant start) {
-        this.start = start;
+    public void setStart(Instant instantStart) {
+        this.start = instantStart.toEpochMilli();
     }
 
     public Instant getEnd() {
-        return end;
+        return Instant.ofEpochMilli(end);
     }
 
-    public void setEnd(Instant end) {
-        this.end = end;
+    public void setEnd(Instant instantEnd) {
+        this.end = instantEnd.toEpochMilli();
     }
 }
