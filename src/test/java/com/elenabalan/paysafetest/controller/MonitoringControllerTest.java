@@ -17,8 +17,10 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 
 import static org.junit.Assert.*;
 
@@ -47,7 +49,7 @@ public class MonitoringControllerTest {
     @Test
     public void startMonitoring() throws Exception{
 
-        RequestEntity<String> requestEntity = RequestEntity.put(new URI("http://localhost:"+port+"/monitor/start"))
+        RequestEntity<String> requestEntity = RequestEntity.post(new URI("http://localhost:"+port+"/monitor/start"))
                 .contentType(MediaType.APPLICATION_JSON).body(startStringQuery);
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
@@ -56,7 +58,7 @@ public class MonitoringControllerTest {
 
     @Test
     public void stopMonitoring() throws URISyntaxException {
-        RequestEntity<String> requestEntity = RequestEntity.put(new URI("http://localhost:"+port+"/monitor/stop"))
+        RequestEntity<String> requestEntity = RequestEntity.post(new URI("http://localhost:"+port+"/monitor/stop"))
                 .contentType(MediaType.APPLICATION_JSON).body(startStringQuery);
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
@@ -64,9 +66,8 @@ public class MonitoringControllerTest {
     }
 
     @Test
-    public void getOverview() throws URISyntaxException {
-        RequestEntity<String> requestEntity = RequestEntity.put(new URI("http://localhost:"+port+"/monitor/info"))
-                .contentType(MediaType.APPLICATION_JSON).body(startStringQuery);
+    public void getOverview() throws URISyntaxException, UnsupportedEncodingException {
+        RequestEntity requestEntity = RequestEntity.get(new URI("http://localhost:"+port+"/monitor/info?uri="+URLEncoder.encode(fakeUri, "UTF-8"))).build();
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
         Mockito.verify(monitoringService).getOverview(fakeUri);
