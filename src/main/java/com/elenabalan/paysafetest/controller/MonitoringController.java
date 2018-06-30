@@ -25,9 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 /**
  *  REST Controller
  */
