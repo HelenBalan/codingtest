@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  *  REST Controller
  */
@@ -35,19 +38,19 @@ public class MonitoringController {
     @Autowired
     private MonitoringService monitoringService;
 
-    @RequestMapping(value = "/start", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/start", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void startMonitoring(@RequestBody StartQuery startQuery) {
         monitoringService.start(startQuery.getUri(), startQuery.getSeconds());
     }
 
-    @RequestMapping(value = "/stop", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/stop", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void stopMonitoring(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
         monitoringService.stop(stopOrInfoQuery.getUri());
     }
 
-    @RequestMapping(value = "/info", method = RequestMethod.PUT)
-    public MonitoringLogInfo getOverview(@RequestBody StopOrInfoQuery stopOrInfoQuery) {
-        return monitoringService.getOverview(stopOrInfoQuery.getUri());
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public MonitoringLogInfo getOverview(@RequestParam String uri){
+        return monitoringService.getOverview(uri);
     }
 }
 
